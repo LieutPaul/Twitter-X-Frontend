@@ -1,24 +1,18 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import LeftBar from "./Components/LeftBar/LeftBar";
+import MainBody from "./Components/MainBody/MainBody";
+import RightBar from "./Components/RightBar/RightBar";
+
+import './App.scss'
 
 function App() {
+  const [leftBarOption, setLeftBarOption] = React.useState("Home");
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <div className="layout">
+      <LeftBar leftBarOption={leftBarOption} setLeftBarOption={setLeftBarOption}/>
+      <MainBody leftBarOption={leftBarOption}/>
+      <RightBar/>
+    </div>  
   );
 }
 

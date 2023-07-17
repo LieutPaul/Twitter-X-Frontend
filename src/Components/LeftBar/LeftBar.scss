@@ -1,0 +1,22 @@
+.brandLogo{
+    height : 30px;
+    filter: invert(67%) sepia(52%) saturate(4925%) hue-rotate(175deg) brightness(92%) contrast(106%);
+}
+
+.sidebar-menu{
+    position:fixed;
+    padding : 25px 25px 25px 25px;
+}
+
+.sidebar-menu__item{
+    font-size: 19px;
+    color: #0F141A;
+    margin-bottom: 10px;
+    padding: 12px 12px 12px 12px;
+}
+
+.sidebar-menu__item:hover{
+    background-color: rgb(238, 238, 238);
+    cursor:pointer;
+    border-radius: 15px;
+}

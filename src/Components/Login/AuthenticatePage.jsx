@@ -30,7 +30,7 @@ export default function AuthenticatePage() {
         setLoading(false);
         
         if(response){
-            localStorage.setItem("Twitter JWT",response.data);
+            localStorage.setItem("Twitter JWT", response.data);
             navigate("/home");
         }else{
             alert("Failure to login/signup");

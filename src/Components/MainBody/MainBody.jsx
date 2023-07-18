@@ -3,7 +3,7 @@ import Tweet from '../Tweet/Tweet'
 import './MainBody.scss'
 import { postTweet } from '../../TweetAPIs';
 
-export default function MainBody({leftBarOption,userTweets}) {
+export default function MainBody({userId, leftBarOption, allTweets}) {
 
   const textareaRef = React.useRef(null);
   const [tweet, setTweet] = React.useState("");
@@ -59,8 +59,19 @@ export default function MainBody({leftBarOption,userTweets}) {
             </div>
         </div>
 
-        {userTweets.map((userTweet,index)=>{
-          return <Tweet key={index} name={userTweet.user.name || userTweet.user.email} handle={userTweet.user.username} time={"9h"} content={userTweet.content}/>
+        {allTweets.map((userTweet,index)=>{
+          return <Tweet 
+          key={index} 
+          tweetId={userTweet.id}
+          userId={userId}
+          name={userTweet.user.name || userTweet.user.email} 
+          handle={userTweet.user.username} 
+          time={"9h"} 
+          content={userTweet.content}
+          likes={userTweet.likes}
+          retweets={userTweet.retweets}
+          comments={0}
+          />
         })}
         
     </div>

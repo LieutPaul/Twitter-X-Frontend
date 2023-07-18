@@ -8,6 +8,17 @@ export default function LoginPage() {
     const [email,setEmail] = React.useState("");
     const [loading, setLoading] = React.useState(false);
 
+
+    React.useEffect(()=>{
+        async function setUp(){
+            const jwt = localStorage.getItem("Twitter JWT");
+            if(jwt){
+                navigate("/home");
+            }
+        }
+        setUp();
+    },[navigate]);
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         if(ValidateEmail(email)){

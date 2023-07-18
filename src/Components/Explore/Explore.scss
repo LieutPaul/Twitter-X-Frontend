@@ -1,0 +1,10 @@
+.explore{
+    input{
+        background-color: rgb(243, 243, 243);
+        width: 80%;
+        border-radius: 30px;
+    }
+    input:focus{
+        border: 0.01px blue !important;
+    }
+}

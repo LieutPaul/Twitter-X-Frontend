@@ -14,7 +14,6 @@ export const login = async (email) => {
 export const authenticate = async (email,token) => {
     try{
         const response = await axios.post(baseURL + "/auth/authenticate", {email:email, emailToken : token});
-        console.log(response);
         return response;
     }catch (e){
         return false;

@@ -1,5 +1,5 @@
 import React from 'react'
-import { login } from './LoginAPIs';
+import { login } from './AuthAPIs';
 import {useNavigate} from 'react-router-dom';
 import ReactLoading from "react-loading";
 

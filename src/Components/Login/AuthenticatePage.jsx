@@ -1,5 +1,5 @@
 import React from 'react'
-import { authenticate } from './LoginAPIs';
+import { authenticate } from './AuthAPIs';
 import {useNavigate, useLocation} from 'react-router-dom';
 import ReactLoading from "react-loading";
 
@@ -30,7 +30,8 @@ export default function AuthenticatePage() {
         setLoading(false);
         
         if(response){
-            console.log("JWT - " + response.data);
+            localStorage.setItem("Twitter JWT",response.data);
+            navigate("/home");
         }else{
             alert("Failure to login/signup");
             navigate("/login");
@@ -54,7 +55,7 @@ export default function AuthenticatePage() {
                     
                     <form onSubmit={handleSubmit}>
                         <div className='mt-8 text-center'>
-                            <input onChange={(e)=>setToken(e.target.value)} className='w-[55%] border-1 border-solid border-[#CFD9DE] rounded-[3px] pe-2 pt-3 pb-3 ps-2' placeholder='Enter Your Email ID'></input>
+                            <input onChange={(e)=>setToken(e.target.value)} className='w-[55%] border-1 border-solid border-[#CFD9DE] rounded-[3px] pe-2 pt-3 pb-3 ps-2' placeholder='Enter The Email Token'></input>
                         </div>
 
                         <div className='mt-8 text-center'>

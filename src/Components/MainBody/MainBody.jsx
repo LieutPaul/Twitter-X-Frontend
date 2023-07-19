@@ -3,7 +3,7 @@ import Tweet from '../Tweet/Tweet'
 import './MainBody.scss'
 import { postTweet } from '../../TweetAPIs';
 
-export default function MainBody({userId, leftBarOption, allTweets}) {
+export default function MainBody({userId, allTweets}) {
 
   const textareaRef = React.useRef(null);
   const [tweet, setTweet] = React.useState("");
@@ -31,7 +31,7 @@ export default function MainBody({userId, leftBarOption, allTweets}) {
 
   return (
     <div className='col-6 mt-4'>
-        <span className='font-bold text-lg mt-2'>{leftBarOption}</span>
+        <span className='font-bold text-lg mt-2'>Home</span>
         
         <div className='compose-tweet'>
             

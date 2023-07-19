@@ -29,12 +29,12 @@ export const postTweet = async (tweet) => {
     }
 }
 
-export const getUserId = async (setUserId) => {
+export const getUserId = async (toSet,setUserId) => {
     try{
         const user = await axios.get(baseURL + "/users/getByJWT", config);
         if(user){
             const userId = user.data;
-            setUserId(userId);
+            if(toSet) setUserId(userId);
             return true;
         }else{
             return null;

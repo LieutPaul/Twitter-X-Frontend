@@ -2,6 +2,7 @@ import React from 'react'
 import { login } from './AuthAPIs';
 import {useNavigate} from 'react-router-dom';
 import ReactLoading from "react-loading";
+import { getUserId } from '../../TweetAPIs';
 
 export default function LoginPage() {
     const navigate = useNavigate();
@@ -13,7 +14,9 @@ export default function LoginPage() {
         async function setUp(){
             const jwt = localStorage.getItem("Twitter JWT");
             if(jwt){
-                navigate("/home");
+                if(await getUserId(false,null) != null){
+                    navigate("/home")
+                }
             }
         }
         setUp();

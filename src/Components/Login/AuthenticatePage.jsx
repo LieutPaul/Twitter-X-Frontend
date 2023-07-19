@@ -18,7 +18,6 @@ export default function AuthenticatePage() {
         if (!email) {
           navigate('/login');
         }
-        // Going back to login screen if there is no email to validate
     }, [email, navigate]);
 
     

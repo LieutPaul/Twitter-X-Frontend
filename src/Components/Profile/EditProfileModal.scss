@@ -1,0 +1,18 @@
+.change-profile-details{
+
+
+    input:focus {
+        outline: none; /* Remove the default blue outline */
+        border-color: #1D9BF0; /* Set the desired border color on focus */
+    }
+    .inputText {
+        font-size: 14px;
+        width: 70%;
+        height: 55px;
+        border: 1px solid black;;
+        padding-left: 10px;
+        font-size:20px;
+    }
+
+
+}

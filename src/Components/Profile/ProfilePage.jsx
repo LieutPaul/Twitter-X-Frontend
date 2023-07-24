@@ -65,66 +65,76 @@ export default function ProfilePage() {
                         }
                     </div>
                     {userId === profileId &&  
-                        <button onClick={()=>{setShowEditProfile(true);}} className='mb-2 hover:bg-[#d3d3d3] ps-3 pe-3 rounded-[20px] font-bold border-1 border-[grey] h-[40px]'>Edit Profile</button>
+                        <>
+                            <button onClick={()=>{setShowEditProfile(true);}} className='mb-2 hover:bg-[#d3d3d3] ps-3 pe-3 rounded-[20px] font-bold border-1 border-[grey] h-[40px]'>Edit Profile</button>
+                            <EditProfileModal bio = {profile.bio} name={profile.name} username={profile.username} setShowEditProfile={setShowEditProfile} showEditProfile={showEditProfile}/>
+                        </>
                     }
-                    <EditProfileModal bio = {profile.bio} name={profile.name} username={profile.username} setShowEditProfile={setShowEditProfile} showEditProfile={showEditProfile}/>
+                    
                 </div>
                 
-
-                <div>
+                {profile !== null && 
                     
-                    <div className='text-[25px] font-bold mt-4 '>All Tweets</div>
-                    {tweets.map((userTweet,index)=>{
-                        return <Tweet 
-                            key={index} 
-                            tweetId={userTweet.id}
-                            userId={userId}
-                            name={userTweet.user.name || userTweet.user.email} 
-                            handle={userTweet.user.username} 
-                            time={"9h"} 
-                            content={userTweet.content}
-                            likes={userTweet.likes}
-                            retweets={userTweet.retweets}
-                            comments={0}
-                        />
-                    })}
+                    <div>
 
-                    <div className='text-[25px] font-bold mt-4 '>Liked Tweets</div>
-                    {likedTweets.map((userTweet,index)=>{
-                        userTweet = userTweet.tweet;
-                        return <Tweet 
-                            key={index} 
-                            tweetId={userTweet.id}
-                            userId={userId}
-                            name={userTweet.user.name || userTweet.user.email} 
-                            handle={userTweet.user.username} 
-                            time={"9h"} 
-                            content={userTweet.content}
-                            likes={userTweet.likes}
-                            retweets={userTweet.retweets}
-                            comments={0}
-                        />
-                    })}
+                        <div className='text-[25px] font-bold mt-4 '>All Tweets</div>
+                        {tweets.map((userTweet,index)=>{
+                            return <Tweet 
+                                key={index} 
+                                tweetId={userTweet.id}
+                                userId={userId}
+                                name={userTweet.user.name || userTweet.user.email} 
+                                handle={userTweet.user.username} 
+                                time={"9h"} 
+                                content={userTweet.content}
+                                likes={userTweet.likes}
+                                retweets={userTweet.retweets}
+                                comments={0}
+                            />
+                        })}
 
-                    <div className='text-[25px] font-bold mt-4 '>Retweeted Tweets</div>
-                    {retweetedTweets.map((userTweet,index)=>{
-                        userTweet = userTweet.tweet;
-                        return <Tweet 
-                            key={index} 
-                            tweetId={userTweet.id}
-                            userId={userId}
-                            name={userTweet.user.name || userTweet.user.email} 
-                            handle={userTweet.user.username} 
-                            time={"9h"} 
-                            content={userTweet.content}
-                            likes={userTweet.likes}
-                            retweets={userTweet.retweets}
-                            comments={0}
-                        />
-                    })}
-                </div>
+                        <div className='text-[25px] font-bold mt-4 '>Liked Tweets</div>
+                        {likedTweets.map((userTweet,index)=>{
+                            userTweet = userTweet.tweet;
+                            return <Tweet 
+                                key={index} 
+                                tweetId={userTweet.id}
+                                userId={userId}
+                                name={userTweet.user.name || userTweet.user.email} 
+                                handle={userTweet.user.username} 
+                                time={"9h"} 
+                                content={userTweet.content}
+                                likes={userTweet.likes}
+                                retweets={userTweet.retweets}
+                                comments={0}
+                            />
+                        })}
+
+                        <div className='text-[25px] font-bold mt-4 '>Retweeted Tweets</div>
+                        {retweetedTweets.map((userTweet,index)=>{
+                            userTweet = userTweet.tweet;
+                            return <Tweet 
+                                key={index} 
+                                tweetId={userTweet.id}
+                                userId={userId}
+                                name={userTweet.user.name || userTweet.user.email} 
+                                handle={userTweet.user.username} 
+                                time={"9h"} 
+                                content={userTweet.content}
+                                likes={userTweet.likes}
+                                retweets={userTweet.retweets}
+                                comments={0}
+                            />
+                        })}
+                    
+                    </div>
+
+                }
+            
             </div>
+            
             <RightBar/>
+        
         </div>
     )
 }

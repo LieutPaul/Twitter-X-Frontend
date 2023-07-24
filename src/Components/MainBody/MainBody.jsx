@@ -48,7 +48,7 @@ export default function MainBody({userId, allTweets}) {
                 </div>
             </div>
             
-            <div className='text-right mt-6'>
+            <div className='text-right mt-6 mb-3'>
                 <button 
                 disabled={tweet.trim() === ""} 
                 className={`font-bold bg-[#1D9BF0] rounded-[20px] text-white ps-4 pt-2 pe-4 pb-2 ${tweet.trim() === "" ? "opacity-50" : "hover:opacity-80"}`}
@@ -61,16 +61,16 @@ export default function MainBody({userId, allTweets}) {
 
         {allTweets.map((userTweet,index)=>{
           return <Tweet 
-          key={index} 
-          tweetId={userTweet.id}
-          userId={userId}
-          name={userTweet.user.name || userTweet.user.email} 
-          handle={userTweet.user.username} 
-          time={"9h"} 
-          content={userTweet.content}
-          likes={userTweet.likes}
-          retweets={userTweet.retweets}
-          comments={0}
+            key={index} 
+            tweetId={userTweet.id}
+            userId={userId}
+            name={userTweet.user.name || userTweet.user.email} 
+            handle={userTweet.user.username} 
+            time={"9h"} 
+            content={userTweet.content}
+            likes={userTweet.likes}
+            retweets={userTweet.retweets}
+            comments={userTweet.comments.length}
           />
         })}
         

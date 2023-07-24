@@ -19,6 +19,16 @@ export const getAllTweets = async (setTweets) => {
     }
 }
 
+export const getTweetFromId = async (tweetId) => {
+    try{
+        const response = await axios.get(baseURL + "/tweets/" + tweetId, config);
+        return response.data;
+    }catch (e) {
+        console.log(e);
+        return null;
+    }
+}
+
 export const postTweet = async (tweet) => {
     try{
         const response = await axios.post(baseURL + "/tweets/postTweet", {content:tweet}, config);
@@ -90,6 +100,26 @@ export const reTweet = async(userId, tweetId) => {
 export const unReTweet = async(userId, tweetId) => {
     try{
         const response = await axios.post(baseURL + "/tweets/unReTweet", {userId, tweetId},config);
+        if(response){
+            return true;
+        }else{
+            return null;
+        }
+    }catch (e){
+        console.log(e);
+        return null;
+    }
+}
+
+export const addComment = async(userId, tweetId, comment) => {
+    const body = {
+        userId : userId,
+        tweetId : tweetId,
+        content : comment
+    };
+    
+    try{
+        const response = await axios.post(baseURL + "/tweets/addComment", body,config);
         if(response){
             return true;
         }else{

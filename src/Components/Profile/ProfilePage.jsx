@@ -57,9 +57,15 @@ export default function ProfilePage() {
                         <div className='text-[15px] text-[#6b767c]'>
                             {profile !== null && "@"+profile.username}
                         </div>
+                        {userId === profileId &&  
+                            <button onClick={()=>{
+                                    localStorage.removeItem("Twitter JWT");
+                                    window.location.reload();
+                                }} className='mt-3 hover:bg-[#d3d3d3] ps-3 pe-3 rounded-[20px] font-bold border-1 border-[grey] h-[40px]'>Logout</button>
+                        }
                     </div>
-                    {userId === profileId && 
-                        <button onClick={()=>{setShowEditProfile(true);}} className='hover:bg-[#d3d3d3] ps-3 pe-3 rounded-[20px] font-bold border-1 border-[grey] h-[40px]'>Edit Profile</button>
+                    {userId === profileId &&  
+                        <button onClick={()=>{setShowEditProfile(true);}} className='mb-2 hover:bg-[#d3d3d3] ps-3 pe-3 rounded-[20px] font-bold border-1 border-[grey] h-[40px]'>Edit Profile</button>
                     }
                     <EditProfileModal bio = {profile.bio} name={profile.name} username={profile.username} setShowEditProfile={setShowEditProfile} showEditProfile={showEditProfile}/>
                 </div>

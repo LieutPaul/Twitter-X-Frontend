@@ -5,6 +5,7 @@ import ProfilePage from './Components/Profile/ProfilePage';
 import Explore from './Components/Explore/Explore';
 import { Routes, Route, Navigate } from "react-router-dom";
 import Home from './Components/MainBody/Home';
+import TweetPage from './Components/Tweet/TweetPage';
 
 export default function App() {
      
@@ -13,6 +14,7 @@ export default function App() {
         
             <Route path="*" element={<Navigate to={`/home`}/>} />
             <Route path="/home" element={<Home/>}/>
+            <Route path="/home/tweet/:tweetId" element={<TweetPage/>}/>
             <Route path="/explore" element={<Explore/>}/>
             <Route path="/profile/:profileId" element={<ProfilePage />} />
             <Route path="/login" element={<LoginPage/>}/>

@@ -82,14 +82,15 @@ export default function ProfilePage() {
                             return <Tweet 
                                 key={index} 
                                 tweetId={userTweet.id}
+                                tweetUserId = {userTweet.user.id}
+                                createdAt = {userTweet.createdAt}
                                 userId={userId}
                                 name={userTweet.user.name || userTweet.user.email} 
                                 handle={userTweet.user.username} 
-                                time={"9h"} 
                                 content={userTweet.content}
                                 likes={userTweet.likes}
                                 retweets={userTweet.retweets}
-                                comments={0}
+                                comments={userTweet.comments.length}
                             />
                         })}
 
@@ -99,14 +100,15 @@ export default function ProfilePage() {
                             return <Tweet 
                                 key={index} 
                                 tweetId={userTweet.id}
+                                tweetUserId = {userTweet.user.id}
+                                createdAt = {userTweet.createdAt}
                                 userId={userId}
                                 name={userTweet.user.name || userTweet.user.email} 
                                 handle={userTweet.user.username} 
-                                time={"9h"} 
                                 content={userTweet.content}
                                 likes={userTweet.likes}
                                 retweets={userTweet.retweets}
-                                comments={0}
+                                comments={userTweet.comments.length}
                             />
                         })}
 
@@ -116,10 +118,11 @@ export default function ProfilePage() {
                             return <Tweet 
                                 key={index} 
                                 tweetId={userTweet.id}
+                                tweetUserId = {userTweet.user.id}
+                                createdAt = {userTweet.createdAt}
                                 userId={userId}
                                 name={userTweet.user.name || userTweet.user.email} 
                                 handle={userTweet.user.username} 
-                                time={"9h"} 
                                 content={userTweet.content}
                                 likes={userTweet.likes}
                                 retweets={userTweet.retweets}

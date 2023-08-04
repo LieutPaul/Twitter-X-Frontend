@@ -12,7 +12,7 @@ export const getAllTweets = async (setTweets) => {
     try{
         const response = await axios.get(baseURL + "/tweets", config);
         setTweets(response.data);
-        return true;
+        return response.data;
     }catch (e) {
         console.log(e);
         return null;

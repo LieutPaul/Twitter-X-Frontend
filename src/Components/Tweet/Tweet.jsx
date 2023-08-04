@@ -7,8 +7,24 @@ import RetweetButton from './RetweetButton';
 import { useNavigate } from 'react-router-dom';
 
 
-export default function Tweet({tweetId,userId, name,handle,time,content,comments,retweets,likes}) {
+export default function Tweet({tweetId,tweetUserId,createdAt,userId,name,handle,content,comments,retweets,likes}) {
     
+    const calculateTimeDifference = (timeFromBackend) => {
+        const backendTime = new Date(timeFromBackend);
+        return backendTime.toLocaleString('default', {
+            month: 'short',
+            day: 'numeric',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+          });
+    };
+    
+    const formattedContent = content.replace(
+        /#(\w+)/g,
+        '<span style="color:#1D9BF0">#$1</span>'
+    );
+
     const postLiked = likes.some((like) => like.userId === userId);
     const postRetweeted = retweets.some((like) => like.userId === userId);
     const navigate = useNavigate();
@@ -16,7 +32,7 @@ export default function Tweet({tweetId,userId, name,handle,time,content,comments
     return (
         <div className='tweet flex ps-2 pb-4 pt-4 w-full'>
             
-            <img className="tweet__author-logo w-[49px] h-[49px] rounded-[50%] mr-[10px]" src="/images/avatar.png" alt="profile"/>
+            <img onClick={()=>{navigate(`/profile/${tweetUserId}`)}} className="hover:cursor-pointer tweet__author-logo w-[49px] h-[49px] rounded-[50%] mr-[10px]" src="/images/avatar.png" alt="profile"/>
             
             <div className='tweet__main w-[80%]'>
                 
@@ -29,7 +45,7 @@ export default function Tweet({tweetId,userId, name,handle,time,content,comments
                             {handle}
                         </div>
                         <div className='tweet__published-time text-[15px] ml-[5px] text-[#657786]'>
-                            {time}
+                            {`(${calculateTimeDifference(createdAt)})`}
                         </div>
                     </div>
                     <div>
@@ -38,7 +54,7 @@ export default function Tweet({tweetId,userId, name,handle,time,content,comments
                 </div>
 
                 <div className='tweet__content'>
-                    {content}
+                    <div dangerouslySetInnerHTML={{ __html: formattedContent }} />
                 </div>
 
                 <div className='tweet__reactions w-full mt-2 flex justify-between'>

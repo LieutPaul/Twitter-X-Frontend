@@ -7,7 +7,7 @@ import RetweetButton from './RetweetButton';
 import { useNavigate } from 'react-router-dom';
 
 
-export default function Tweet({tweetId,tweetUserId,createdAt,userId,name,handle,content,comments,retweets,likes}) {
+export default function Tweet({tweetId,tweetUserId,createdAt,userId,name,handle,content,comments,retweets,likes,imageSrc}) {
     
     const calculateTimeDifference = (timeFromBackend) => {
         const backendTime = new Date(timeFromBackend);
@@ -55,6 +55,9 @@ export default function Tweet({tweetId,tweetUserId,createdAt,userId,name,handle,
 
                 <div className='tweet__content'>
                     <div dangerouslySetInnerHTML={{ __html: formattedContent }} />
+                    {imageSrc && 
+                        <img className='mt-4 w-[300px] h-[300px]' src={imageSrc} alt="Loading.."/>
+                    }
                 </div>
 
                 <div className='tweet__reactions w-full mt-2 flex justify-between'>

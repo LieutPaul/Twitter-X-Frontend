@@ -1,4 +1,6 @@
 import axios from 'axios';
+import { imageDb } from './firebase_setup/firebase'
+import { getDownloadURL,ref,uploadBytes } from 'firebase/storage'
 
 const baseURL = process.env.REACT_APP_BASE_URL
 
@@ -29,9 +31,18 @@ export const getTweetFromId = async (tweetId) => {
     }
 }
 
-export const postTweet = async (tweet) => {
+export const postTweet = async (tweet,file) => {
     try{
-        const response = await axios.post(baseURL + "/tweets/postTweet", {content:tweet}, config);
+        let fileDownloadUrl = null;
+        console.log(file)
+        
+        if (file) {
+            const imgRef = ref(imageDb, `files/${file.name}`);
+            await uploadBytes(imgRef, file);
+            fileDownloadUrl = await getDownloadURL(imgRef);
+        }
+
+        const response = await axios.post(baseURL + "/tweets/postTweet", { content: tweet, image : fileDownloadUrl }, config);
         return response;
     }catch (e){
         console.log(e);

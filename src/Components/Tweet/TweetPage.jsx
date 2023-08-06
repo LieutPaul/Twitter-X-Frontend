@@ -18,8 +18,6 @@ export default function TweetPage() {
 
     const navigate = useNavigate();
 
-    const isReady = false;
-
     React.useEffect(() => {
         const textarea = textareaRef.current;
         const adjustTextareaHeight = () => {
@@ -29,7 +27,6 @@ export default function TweetPage() {
 
         if (textarea) {
             textarea.addEventListener('input', adjustTextareaHeight);
-            isReady = true;
         }
 
         return () => {

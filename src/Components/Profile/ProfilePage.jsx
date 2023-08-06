@@ -91,6 +91,7 @@ export default function ProfilePage() {
                                 likes={userTweet.likes}
                                 retweets={userTweet.retweets}
                                 comments={userTweet.comments.length}
+                                imageSrc = {userTweet.image}
                             />
                         })}
 
@@ -109,6 +110,7 @@ export default function ProfilePage() {
                                 likes={userTweet.likes}
                                 retweets={userTweet.retweets}
                                 comments={userTweet.comments.length}
+                                imageSrc = {userTweet.image}
                             />
                         })}
 
@@ -126,7 +128,8 @@ export default function ProfilePage() {
                                 content={userTweet.content}
                                 likes={userTweet.likes}
                                 retweets={userTweet.retweets}
-                                comments={0}
+                                comments={userTweet.comments.length}
+                                imageSrc = {userTweet.image}
                             />
                         })}
                     

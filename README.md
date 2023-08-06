@@ -18,43 +18,26 @@ The frontend was written using the react library and communication with the back
 
 ## Screenshots
 
+### Home Page
 
 ![Home Page](https://github.com/LieutPaul/Twitter-X-Frontend/blob/main/screenshots/Home%20Page.png)
 
-Home Page
-
-
+### Viewing Tweets on Home Page
 
 ![Viewing Tweets on Home Page](https://github.com/LieutPaul/Twitter-X-Frontend/blob/main/screenshots/Viewing%20Tweets.png)
 
-Viewing Tweets on Home Page
-
-
+### Expanded Tweet Page
 
 ![Expanded Tweet Page](https://github.com/LieutPaul/Twitter-X-Frontend/blob/main/screenshots/Tweet%20Page.png)
 
-
-Expanded Tweet Page
-
-
-
-
+### Searching For Users
 
 ![Searching For Users](https://github.com/LieutPaul/Twitter-X-Frontend/blob/main/screenshots/Searching%20For%20Users.png)
 
-Searching For Users
-
-
-
+### Profile Page
 
 ![Profile Page](https://github.com/LieutPaul/Twitter-X-Frontend/blob/main/screenshots/Profile%20Page.png)
 
-Profile Page
-
-
-
+### Viewing Liked and Retweeted Tweets on Profile Page
 
 ![Viewing Liked and Retweeted Tweets on Profile Page](https://github.com/LieutPaul/Twitter-X-Frontend/blob/main/screenshots/Viewing%20Liked%20and%20Retweeted%20Tweets%20on%20Profile%20Page.png)
-
-Viewing Liked and Retweeted Tweets on Profile Page
-

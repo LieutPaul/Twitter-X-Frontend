@@ -82,14 +82,16 @@ export default function TweetPage() {
                     
                     <Tweet 
                         tweetId={tweet.id}
+                        tweetUserId = {tweet.user.id}
+					    createdAt = {tweet.createdAt}
                         userId={userId}
                         name={tweet.user?.name || tweet.user?.email} 
                         handle={tweet.user?.username} 
-                        time={"9h"} 
                         content={tweet.content}
                         likes={tweet.likes}
                         retweets={tweet.retweets}
                         comments={tweet.comments.length}
+                        imageSrc = {tweet.image}
                     />
                     <hr/>
                     <div className='flex justify-between items-center'>

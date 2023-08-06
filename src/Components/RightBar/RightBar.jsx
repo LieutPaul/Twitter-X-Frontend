@@ -12,29 +12,32 @@ function isWithin24Hours(createdAt) {
 }
 
 function findTrendingTweets(tweets, topN = 10) {
-	const hashtagCounts = {};
-	for (const tweet of tweets) {
-		if (isWithin24Hours(tweet.createdAt)) {
-			const words = tweet.content.split(/\s+/);
-			const hashtags = words.filter(word => /^#\w+$/i.test(word));
-	
-			for (const hashtag of hashtags) {
-				hashtagCounts[hashtag] = (hashtagCounts[hashtag] || 0) + 1;
+	let hashtagCounts = {};
+	if(tweets){
+		for (const tweet of tweets) {
+			if (isWithin24Hours(tweet.createdAt)) {
+				const words = tweet.content.split(/\s+/);
+				const hashtags = words.filter(word => /^#\w+$/i.test(word)).map(hashtag => hashtag.toLowerCase());
+				for (const hashtag of hashtags) {
+					hashtagCounts[hashtag] = (hashtagCounts[hashtag] || 0) + 1;
+				}
 			}
 		}
-	}
-	const trendingHashtags = Object.entries(hashtagCounts)
-		.sort((a, b) => b[1] - a[1])
-		.slice(0, topN)
-		.map(entry => ({ hashtag: entry[0], count: entry[1] }));
+		const trendingHashtags = Object.entries(hashtagCounts)
+			.sort((a, b) => b[1] - a[1])
+			.slice(0, topN)
+			.map(entry => ({ hashtag: entry[0], count: entry[1] }));
 
-	return trendingHashtags;
-  }
+		return trendingHashtags;
+	}else{
+		return [];
+	}
+}
 
 export default function RightBar() {
 
 	const [trendingHashtags,setTrendingHashtags] = React.useState([]);
-	const [tweets,setTweets] = React.useState([]);
+	const [tweets, setTweets] = React.useState([]);
 	const navigate = useNavigate();
   
 	React.useEffect(() => {

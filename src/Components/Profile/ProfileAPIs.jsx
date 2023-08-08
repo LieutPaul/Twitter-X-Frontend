@@ -65,3 +65,39 @@ export const updateUser = async (bio,username,name) => {
     }
 
 }
+
+export const followUser = async (followingId) => {
+
+    try{
+        const response = await axios.post(baseURL + `/users/follow/${followingId}`, {} , config);
+        return response.data;
+    }catch (e){
+        console.log(e);
+        return null;
+    }
+
+}
+
+export const unFollowUser = async (followingId) => {
+
+    try{
+        const response = await axios.post(baseURL + `/users/unfollow/${followingId}`, {} , config);
+        return response.data;
+    }catch (e){
+        console.log(e);
+        return null;
+    }
+
+}
+
+export const isUserFollowing = async (followingId) => {
+
+    try{
+        const response = await axios.post(baseURL + `/users/isFollowing/${followingId}`, {} , config);
+        return response.data;
+    }catch (e){
+        console.log(e);
+        return null;
+    }
+
+}

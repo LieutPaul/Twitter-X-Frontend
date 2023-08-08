@@ -1,5 +1,5 @@
 import React from 'react'
-import { getLikedTweetsByUser, getRetweetedTweetsByUser, getTweetsByUser, getUserFromId } from './ProfileAPIs';
+import { followUser, getLikedTweetsByUser, getRetweetedTweetsByUser, getTweetsByUser, getUserFromId, isUserFollowing, unFollowUser } from './ProfileAPIs';
 import Tweet from '../Tweet/Tweet';
 import { useNavigate, useParams } from 'react-router-dom';
 import LeftBar from '../LeftBar/LeftBar';
@@ -19,6 +19,7 @@ export default function ProfilePage() {
     const [retweetedTweets, setRetweetedTweets] = React.useState([]);
     const [profile, setProfile] = React.useState({});
     const [showEditProfile, setShowEditProfile] = React.useState(false);
+    const [following, setFollowing] = React.useState(false);
 
     React.useEffect(()=>{
         async function setUp(){
@@ -34,6 +35,8 @@ export default function ProfilePage() {
                     }else{
                         const res = await getUserFromId(profileId);
                         setProfile(res);
+                        const res2 = await isUserFollowing(profileId);
+                        setFollowing(res2);
                     }
                 }
             }else{
@@ -64,10 +67,38 @@ export default function ProfilePage() {
                                 }} className='mt-3 hover:bg-[#d3d3d3] ps-3 pe-3 rounded-[20px] font-bold border-1 border-[grey] h-[40px]'>Logout</button>
                         }
                     </div>
-                    {userId === profileId &&  
+                    
+                    
+                    {userId === profileId ?
+                        
                         <>
                             <button onClick={()=>{setShowEditProfile(true);}} className='mb-2 hover:bg-[#d3d3d3] ps-3 pe-3 rounded-[20px] font-bold border-1 border-[grey] h-[40px]'>Edit Profile</button>
                             <EditProfileModal bio = {profile.bio} name={profile.name} username={profile.username} setShowEditProfile={setShowEditProfile} showEditProfile={showEditProfile}/>
+                        </>
+                    :
+                    
+                        <>
+                            {following === false ? 
+                            <button onClick={ async () => {
+                                const res = await followUser(profileId);
+                                if(res){
+                                    window.location.reload();
+                                }else{
+                                    alert("error");
+                                }
+                            }} 
+                            className='mb-2 hover:bg-[#d3d3d3] ps-3 pe-3 rounded-[20px] font-bold border-1 border-[grey] h-[40px]'>Follow User</button>
+                            :
+                            <button onClick={ async () => {
+                                const res = await unFollowUser(profileId);
+                                if(res){
+                                    window.location.reload();
+                                }else{
+                                    alert("error");
+                                }
+                                }} className='mb-2 hover:bg-[#f9aeae] ps-3 pe-3 rounded-[20px] font-bold border-1 border-[grey] h-[40px]'>Unfollow User</button>
+                            }
+
                         </>
                     }
                     

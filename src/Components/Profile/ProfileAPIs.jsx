@@ -101,3 +101,54 @@ export const isUserFollowing = async (followingId) => {
     }
 
 }
+
+
+export const getFollowersLength = async (id) => {
+
+    try{
+        const response = await axios.get(baseURL + `/users/followers/length/${id}`, config);
+        return response.data;
+    }catch (e){
+        console.log(e);
+        return null;
+    }
+
+}
+
+
+export const getFollowingsLength = async (id) => {
+
+    try{
+        const response = await axios.get(baseURL + `/users/followings/length/${id}`, config);
+        return response.data;
+    }catch (e){
+        console.log(e);
+        return null;
+    }
+
+}
+
+export const getFollowers = async (id) => {
+
+    try{
+        const response = await axios.get(baseURL + `/users/followers/${id}`, config);
+        return response.data;
+    }catch (e){
+        console.log(e);
+        return null;
+    }
+
+}
+
+
+export const getFollowings = async (id) => {
+
+    try{
+        const response = await axios.get(baseURL + `/users/followings/${id}`, config);
+        return response.data;
+    }catch (e){
+        console.log(e);
+        return null;
+    }
+
+}

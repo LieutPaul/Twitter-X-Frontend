@@ -40,7 +40,9 @@ export default function Explore() {
             <LeftBar userId={userId} leftBarOption={"Explore"}/>
             
             <div className='explore col-6 mt-4'>
+                
                 <input onChange={handleChange} placeholder='Search Twitter' className='ps-5 pt-3 pb-3 mt-4'></input>
+                
                 <div className='card-container overflow-y-scroll mt-4 w-[80%] rounded-[10px]'>
 
                     {searchedUsers.map((user,key) => {
@@ -58,6 +60,7 @@ export default function Explore() {
                     })}
 
                 </div>
+            
             </div>
             
             <RightBar/>

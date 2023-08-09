@@ -24,12 +24,13 @@ export default function LoginPage() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if(ValidateEmail(email)){
+        const lowerCaseEmail = email.toLowerCase();
+        if(ValidateEmail(lowerCaseEmail)){
             setLoading(true);
-            const response = await login(email);
+            const response = await login(lowerCaseEmail);
             setLoading(false);
             if(response){
-                navigate('/authenticate',{state:{email:email}});
+                navigate('/authenticate',{state:{email:lowerCaseEmail}});
             }else{
                 alert("Failure to login/signup");
             } 

@@ -21,6 +21,18 @@ export const getAllTweets = async (setTweets) => {
     }
 }
 
+export const getAllTweetsByFollowed = async (setTweets) => {
+    try{
+        const response = await axios.get(baseURL + "/users/followingsTweets", config);
+        const finalTweets = [].concat(...response.data.map(item => item.following.tweets));
+        setTweets(finalTweets);
+        return finalTweets;
+    }catch (e) {
+        console.log(e);
+        return null;
+    }
+}
+
 export const getTweetFromId = async (tweetId) => {
     try{
         const response = await axios.get(baseURL + "/tweets/" + tweetId, config);

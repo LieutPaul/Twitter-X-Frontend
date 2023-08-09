@@ -1,9 +1,10 @@
 import React from 'react'
 import {RiHome7Fill} from 'react-icons/ri'
-import {FaSearch,FaEnvelope} from 'react-icons/fa'
+import {FaSearch,FaEnvelope,FaUserFriends} from 'react-icons/fa'
 import {BiHomeCircle,BiSearch} from 'react-icons/bi'
 import {BsPersonFill,BsPerson} from "react-icons/bs"
 import {PiEnvelopeSimple} from 'react-icons/pi'
+import {LiaUserFriendsSolid} from 'react-icons/lia'
 import './LeftBar.scss'
 import { useNavigate } from 'react-router-dom'
 
@@ -18,6 +19,11 @@ export default function LeftBar({userId,leftBarOption}) {
               <div className='mt-4 sidebar-menu__item flex items-center w-full' onClick={()=>{navigate("/home")}}>
                 <span className='mr-6'>{ leftBarOption === "Home" ? <RiHome7Fill size={30}/> : <BiHomeCircle size={30}/>}</span>
                 <span className={`hidden sm:inline-block ${leftBarOption === "Home" && "font-black"}`}>Home</span>
+              </div>
+
+              <div className='sidebar-menu__item flex items-center w-full' onClick={()=>{navigate("/activity")}}>
+                <span className='mr-6'>{ leftBarOption === "Activity" ? <FaUserFriends size={25}/> : <LiaUserFriendsSolid  size={25}/>}</span>
+                <span className={`hidden sm:inline-block ${leftBarOption === "Activity" && "font-black"}`}>Activity</span>
               </div>
 
               <div className='sidebar-menu__item flex items-center w-full' onClick={()=>{navigate("/explore")}}>

@@ -8,6 +8,7 @@ import Home from './Components/MainBody/Home';
 import TweetPage from './Components/Tweet/TweetPage';
 import FollowingsPage from './Components/Profile/FollowingsPage';
 import FollowersPage from './Components/Profile/FollowersPage';
+import Activity from './Components/MainBody/Activity';
 
 export default function App() {
      
@@ -16,6 +17,7 @@ export default function App() {
         
             <Route path="*" element={<Navigate to={`/home`}/>} />
             <Route path="/home" element={<Home/>}/>
+            <Route path="/activity" element={<Activity/>}/>
             <Route path="/home/tweet/:tweetId" element={<TweetPage/>}/>
             <Route path="/explore" element={<Explore/>}/>
             <Route path="/profile/:profileId" element={<ProfilePage />} />

@@ -114,9 +114,9 @@ export default function TweetPage() {
                     
                     {tweet.comments.map((comment,index) => {
                         return (
-                            <div className='flex ps-2 pb-4 pt-4 w-full'>
+                            <div key={index}  className='flex ps-2 pb-4 pt-4 w-full'>
                                 <img className="tweet__author-logo w-[49px] h-[49px] rounded-[50%] mr-[10px]" src="/images/avatar.png" alt="profile"/>
-                                <div key={index} className='w-[80%]'>
+                                <div className='w-[80%]'>
                                     <div className='comment__header mb-1 flex justify-between'>
                                         <div className='flex'>
                                             <div className='comment__author-name text-[15px] font-bold mr-[5px] text-[#14171a]'>

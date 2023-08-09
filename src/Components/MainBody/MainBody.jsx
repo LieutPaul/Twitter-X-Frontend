@@ -5,7 +5,7 @@ import { postTweet } from '../../TweetAPIs';
 import ReactLoading from "react-loading";
 import ImagePicker from '../Helper/ImagePicker';
 
-export default function MainBody({userId, allTweets}) {
+export default function MainBody({compose, userId, allTweets}) {
 
 	const textareaRef = React.useRef(null);
 	const [tweet, setTweet] = React.useState("");
@@ -43,9 +43,9 @@ export default function MainBody({userId, allTweets}) {
 		uploadingTweet === false ? 
 		
 			<div className='col-6 mt-4'>
-				<span className='font-bold text-lg mt-2'>Home</span>
+				<span className='font-bold text-lg mt-2'>{compose ? "Home" : "Activity from profiles you follow"}</span>
 				
-				<div className='compose-tweet'>
+				<div className={`compose-tweet ${!compose && "hidden"}`}>
 					
 					<div className='flex items-center mt-6'>
 						

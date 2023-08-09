@@ -3,9 +3,9 @@ import LeftBar from "../LeftBar/LeftBar";
 import MainBody from "./MainBody";
 import RightBar from "../RightBar/RightBar";
 import { useNavigate } from 'react-router-dom';
-import { getAllTweets, getUserId } from '../../TweetAPIs';
+import { getAllTweetsByFollowed, getUserId } from '../../TweetAPIs';
 
-function Home() {
+export default function Activity() {
   
   const [tweets,setTweets] = React.useState([]);
   const navigate = useNavigate();
@@ -19,7 +19,7 @@ function Home() {
         if (userId == null) {
           navigate("/login");
         } else {
-          const tweets = await getAllTweets(setTweets);
+          const tweets = await getAllTweetsByFollowed(setTweets);
           if (tweets == null) {
             navigate("/login");
           }
@@ -33,12 +33,10 @@ function Home() {
 
   return (
     <div className="layout row">
-      <LeftBar userId={userId} leftBarOption={"Home"}/>
-      <MainBody compose = {true} userId = {userId} allTweets={tweets}/>
+      <LeftBar userId={userId} leftBarOption={"Activity"}/>
+      <MainBody compose={false} userId = {userId} allTweets={tweets}/>
       <RightBar/>
     </div>  
   );
 
 }
-
-export default Home;

@@ -28,3 +28,13 @@ export const getAllUsersFromUsernameString = async (searchString) => {
     }
 }
 
+export const getAllTrendsFromSearchedString = async (searchTrend) => {
+    try{
+        const response = await axios.get(baseURL + `/tweets/trendsFromSearch?trend=${searchTrend}`, config);
+        return response.data;
+    }catch (e){
+        console.log(e);
+        return null;
+    }
+}
+

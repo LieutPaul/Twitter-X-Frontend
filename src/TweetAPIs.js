@@ -35,7 +35,7 @@ export const getAllTweetsByFollowed = async (setTweets) => {
 
 export const getTweetFromId = async (tweetId) => {
     try{
-        const response = await axios.get(baseURL + "/tweets/" + tweetId, config);
+        const response = await axios.get(baseURL + "/tweets/tweetFromId/" + tweetId, config);
         return response.data;
     }catch (e) {
         console.log(e);

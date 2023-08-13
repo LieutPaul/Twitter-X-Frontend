@@ -6,7 +6,7 @@ import ReactLoading from "react-loading";
 import ImagePicker from '../Helper/ImagePicker';
 import { getAllUsersFromUsernameString } from '../Explore/ExploreAPIs';
 
-export default function MainBody({compose, userId, allTweets}) {
+export default function MainBody({trending,compose, userId, allTweets}) {
 
 	const textareaRef = React.useRef(null);
 	const [tweet, setTweet] = React.useState("");
@@ -79,8 +79,9 @@ export default function MainBody({compose, userId, allTweets}) {
 		uploadingTweet === false ? 
 		
 			<div className='col-6 mt-4'>
-				<span className='font-bold text-lg mt-2'>{compose ? "Home" : "Activity from profiles you follow"}</span>
-				
+				<span className='font-bold text-lg mt-2'>{trending === undefined && (compose ? "Home" : "Activity from profiles you follow")}</span>
+				<span className='font-bold text-lg mt-2'>{trending && `#${trending}`}</span>
+
 				<div className={`compose-tweet ${!compose && "hidden"}`}>
 					
 					<div className='flex items-center mt-6'>

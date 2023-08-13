@@ -4,12 +4,13 @@ import LeftBar from '../LeftBar/LeftBar'
 import RightBar from '../RightBar/RightBar'
 import { getUserId } from '../../TweetAPIs';
 import { useNavigate } from 'react-router-dom';
-import { getAllUsersFromSearchedString } from './ExploreAPIs';
+import { getAllTrendsFromSearchedString, getAllUsersFromSearchedString } from './ExploreAPIs';
 
 export default function Explore() {
 
     const [userId, setUserId] = React.useState(null);
     const [searchedUsers, setSearchedUsers] = React.useState([]);
+    const [searchedTrends, setSearchedTrends] = React.useState([]);
     
     const navigate = useNavigate();
     
@@ -28,11 +29,23 @@ export default function Explore() {
     }, [navigate])
 
     const handleChange = async (e) => {
-        if(e.target.value !== "")
-            setSearchedUsers(await getAllUsersFromSearchedString(e.target.value));
-        else
-            setSearchedUsers([])
-    }
+        const inputValue = e.target.value;
+        
+        if (inputValue !== "") {
+            if (inputValue[0] === "#") {
+                const trends = await getAllTrendsFromSearchedString(inputValue.substring(1));
+                setSearchedTrends(trends);
+                setSearchedUsers([]);
+            } else {
+                const users = await getAllUsersFromSearchedString(inputValue);
+                setSearchedUsers(users);
+                setSearchedTrends([]);
+            }
+        } else {
+            setSearchedUsers([]);
+            setSearchedTrends([]);
+        }
+    };
     
     return (
         <div className='row'>
@@ -56,6 +69,17 @@ export default function Explore() {
                                     {user.username} 
                                 </div>
                             </div>
+                        );
+                    })}
+
+                    {searchedTrends.map((trend,key) => {
+                        return (
+                            <div onClick={()=>{navigate(`/explore/trending?trend=${trend.substring(1)}`)}} key={key} className='user-item mt-2 mb-2 pt-2 pb-2 flex items-center'>
+                                <div className='ps-4 text-[15px] font-bold mr-[15px] text-[#14171a]'>
+                                    {trend}
+                                </div>
+                            </div>
+                            
                         );
                     })}
 

@@ -22,7 +22,7 @@ export default function Tweet({tweetId,tweetUserId,createdAt,userId,name,handle,
     
     let formattedContent = content.replace(
         /#(\w+)/g,
-        '<span style="color:#1D9BF0">#$1</span>'
+        '<a href="/explore/trending?trend=$1" style="color:#1D9BF0; text-decoration: none;">#$1</a>'
     );
 
     formattedContent = formattedContent.replace(

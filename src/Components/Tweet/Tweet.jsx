@@ -20,9 +20,14 @@ export default function Tweet({tweetId,tweetUserId,createdAt,userId,name,handle,
           });
     };
     
-    const formattedContent = content.replace(
+    let formattedContent = content.replace(
         /#(\w+)/g,
         '<span style="color:#1D9BF0">#$1</span>'
+    );
+
+    formattedContent = formattedContent.replace(
+        /@(\w+)/g,
+        '<a href="/profile/username/$1" style="color: #1D9BF0; text-decoration: none;">@$1</a>'
     );
 
     const postLiked = likes.some((like) => like.userId === userId);

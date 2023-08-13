@@ -4,6 +4,7 @@ import './MainBody.scss'
 import { postTweet } from '../../TweetAPIs';
 import ReactLoading from "react-loading";
 import ImagePicker from '../Helper/ImagePicker';
+import { getAllUsersFromUsernameString } from '../Explore/ExploreAPIs';
 
 export default function MainBody({compose, userId, allTweets}) {
 
@@ -11,6 +12,7 @@ export default function MainBody({compose, userId, allTweets}) {
 	const [tweet, setTweet] = React.useState("");
 	const [file, setFile] = React.useState(null);
 	const [uploadingTweet,setUploadingTweet] = React.useState(false)
+	const [searchedUsers, setSearchedUsers] = React.useState([]);
 
 	React.useLayoutEffect(() => {
 		const textarea = textareaRef.current;
@@ -38,6 +40,40 @@ export default function MainBody({compose, userId, allTweets}) {
 		}
 	}
 
+	const searchingForUsers = async (string) => {
+        if(string !== "")
+            setSearchedUsers(await getAllUsersFromUsernameString(string));
+        else
+            setSearchedUsers([])
+    }
+
+	const handleTextareaChange = (e) => {
+		const value = e.target.value;
+		setTweet(value);
+		const cursorPosition = textareaRef.current.selectionStart;
+		const lastAtSymbolIndex = value.lastIndexOf('@', cursorPosition - 1);
+	
+		if (lastAtSymbolIndex !== -1) {
+			const searchString = value.substring(lastAtSymbolIndex + 1, cursorPosition);
+			searchingForUsers(searchString);
+		} else {
+		  	setSearchedUsers([]);
+		}
+	};
+
+	const handleUserItemClick = (username) => {
+		const textarea = textareaRef.current;
+		const cursorPosition = textarea.selectionStart;
+		const lastAtSymbolIndex = tweet.lastIndexOf('@', cursorPosition - 1);
+	
+		if (lastAtSymbolIndex !== -1) {
+		  const textBeforeAtSymbol = tweet.substring(0, lastAtSymbolIndex + 1);
+		  const newText = textBeforeAtSymbol + username + ' ';
+		  setTweet(newText);
+		  textarea.focus();
+		}
+	};
+
   	return (
 		
 		uploadingTweet === false ? 
@@ -52,13 +88,30 @@ export default function MainBody({compose, userId, allTweets}) {
 						<img className="tweet__author-logo w-[49px] h-[49px] rounded-[50%] mr-[10px]" src="/images/avatar.png" alt="profile"/>
 						
 						<div className='font-medium text-[20px] w-full ps-3'>
+							
 							<textarea 
 								ref={textareaRef} 
 								style={{"resize":"none", "overflowY":"hidden"}} 
 								placeholder="What is Happening?" 
 								className='custom-textarea pt-1 w-full' 
-								onChange={(e) => setTweet(e.target.value)}
+								value={tweet}
+								onChange={handleTextareaChange}
 							/>
+
+							{searchedUsers.length > 0 && (
+								<div className="search-results">
+									{searchedUsers.map((user, index) => {
+										return (
+											<div className="user-item" key={index} onClick={ () => handleUserItemClick(user.username) }>
+												{user.username}
+												<br />
+												<div className='text-[#657786] text-[15px]'>{user.name}</div>
+											</div>
+										);
+									})}
+								</div>
+							)}
+
 							
 							<ImagePicker file={file} setFile={setFile}/>
 						

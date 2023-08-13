@@ -3,3 +3,27 @@
     border-color: #1D9BF0; /* Set the desired border color on focus */
 }
   
+.compose-tweet{
+    
+    .user-item {
+        transition: background-color 0.2s ease;
+        cursor: pointer; 
+        margin-bottom: 10px;
+    }
+      
+    .user-item:hover {
+        background-color: #f0f0f0;
+    }
+
+    .search-results {
+        box-shadow: rgba(101, 119, 134, 0.2) 0px 0px 15px, rgba(101, 119, 134, 0.15) 0px 0px 3px 1px;
+        transition: 0.3s;
+        width:fit-content;
+        height:fit-content;
+        padding: 5px 10px 5px 10px;
+        margin-bottom: 10px;
+        max-height:150px;
+        overflow-y: scroll;
+    }
+
+}

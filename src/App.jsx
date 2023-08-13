@@ -9,6 +9,7 @@ import TweetPage from './Components/Tweet/TweetPage';
 import FollowingsPage from './Components/Profile/FollowingsPage';
 import FollowersPage from './Components/Profile/FollowersPage';
 import Activity from './Components/MainBody/Activity';
+import UsernameProfilePage from './Components/Profile/UsernameProfilePage';
 
 export default function App() {
      
@@ -16,15 +17,21 @@ export default function App() {
         <Routes>
         
             <Route path="*" element={<Navigate to={`/home`}/>} />
+            
             <Route path="/home" element={<Home/>}/>
             <Route path="/activity" element={<Activity/>}/>
             <Route path="/home/tweet/:tweetId" element={<TweetPage/>}/>
             <Route path="/explore" element={<Explore/>}/>
+            
             <Route path="/profile/:profileId" element={<ProfilePage />} />
-            <Route path="/login" element={<LoginPage/>}/>
-            <Route path="/authenticate" element={<AuthenticatePage/>}/>
+            <Route path="/profile/username/:username" element={<UsernameProfilePage />} />
+            
             <Route path="/followings/:profileId" element={<FollowingsPage/>}/>
             <Route path="/followers/:profileId" element={<FollowersPage/>}/>
+            
+            <Route path="/login" element={<LoginPage/>}/>
+            <Route path="/authenticate" element={<AuthenticatePage/>}/>
+            
         
         </Routes>
     )

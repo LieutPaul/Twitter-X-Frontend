@@ -17,3 +17,14 @@ export const getAllUsersFromSearchedString = async (searchString) => {
         return null;
     }
 }
+
+export const getAllUsersFromUsernameString = async (searchString) => {
+    try{
+        const response = await axios.post(baseURL + "/users/usernameFromSearch", {searchString}, config);
+        return response.data;
+    }catch (e){
+        console.log(e);
+        return null;
+    }
+}
+

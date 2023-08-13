@@ -51,6 +51,16 @@ export const getUserFromId = async (userId) => {
     }
 }
 
+export const getUserFromUsername = async (username) => {
+    try{
+        const response = await axios.post(baseURL + "/users/getByUsername", {username}, config);
+        return response.data;
+    }catch (e){
+        console.log(e);
+        return null;
+    }
+}
+
 export const updateUser = async (bio,username,name) => {
     bio = bio.trim(); name = name.trim(); username = username.trim();
     

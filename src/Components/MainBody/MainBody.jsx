@@ -152,6 +152,8 @@ export default function MainBody({trending,compose, userId, allTweets}) {
 		
 		: 
 		
-			<ReactLoading type="spokes" color="#0000FF" height={100} width={50} />
+		<div className='col-6 flex justify-center items-center h-[100vh]'>
+			<ReactLoading type="spin" color="#1D9BF0" height={100} width={50} />
+		</div>
 	)
 }

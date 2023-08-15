@@ -5,6 +5,7 @@ import {BiArrowBack} from 'react-icons/bi'
 import Tweet from './Tweet';
 import LeftBar from '../LeftBar/LeftBar';
 import RightBar from '../RightBar/RightBar';
+import ReactLoading from "react-loading";
 
 export default function TweetPage() {
     
@@ -66,13 +67,11 @@ export default function TweetPage() {
     }
 
     return (
-        loading === true ? 
-            <div></div> 
-        : 
-            <div className="layout row">
-                
-                <LeftBar userId={userId} leftBarOption={"Home"}/>
-                
+        <div className="layout row">
+            
+            <LeftBar userId={userId} leftBarOption={"Home"}/>
+            
+            {loading === false ? 
                 <div className='col-6'>
                     
                     <div className='flex font-bold text-[25px] mt-3 mb-2'> 
@@ -83,7 +82,7 @@ export default function TweetPage() {
                     <Tweet 
                         tweetId={tweet.id}
                         tweetUserId = {tweet.user.id}
-					    createdAt = {tweet.createdAt}
+                        createdAt = {tweet.createdAt}
                         userId={userId}
                         name={tweet.user?.name || tweet.user?.email} 
                         handle={tweet.user?.username} 
@@ -135,9 +134,14 @@ export default function TweetPage() {
                         );
                     })}
                 </div>
-                
-                <RightBar/>
+                :
+                <div className='col-6 flex justify-center items-center h-[100vh]'>
+                    <ReactLoading type="spin" color="#1D9BF0" height={100} width={50} />
+				</div>
+            }
             
-            </div>
+            <RightBar/>
+        
+        </div>
     )
 }

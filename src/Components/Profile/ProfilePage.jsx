@@ -6,6 +6,7 @@ import LeftBar from '../LeftBar/LeftBar';
 import RightBar from '../RightBar/RightBar';
 import { getUserId } from '../../TweetAPIs';
 import EditProfileModal from './EditProfileModal';
+import ReactLoading from "react-loading";
 
 export default function ProfilePage() {
     const navigate = useNavigate();
@@ -24,16 +25,22 @@ export default function ProfilePage() {
     const [followersLength,setFollowersLength] = React.useState([]);
     const [followingsLength,setFollowingsLength] = React.useState([]);
 
+    const [loading, setLoading] = React.useState(false);
+
     React.useEffect(()=>{
         async function setUp(){
             const jwt = localStorage.getItem("Twitter JWT");
             if(jwt){
+                setLoading(true);
                 if(await getUserId(true,setUserId) == null){
+                    setLoading(false);
                     navigate("/login")
                 }else{
+                    setLoading(true);
                     if(await getTweetsByUser(profileId,setTweets) == null || 
                     await getLikedTweetsByUser(profileId,setLikedTweets) == null || 
                     await getRetweetedTweetsByUser(profileId,setRetweetedTweets) == null){
+                        setLoading(false);
                         navigate("/login");
                     }else{
                         let res = await getUserFromId(profileId);
@@ -44,6 +51,7 @@ export default function ProfilePage() {
                         setFollowersLength(res);
                         res = await getFollowingsLength(profileId);
                         setFollowingsLength(res);
+                        setLoading(false);
                     }
                 }
             }else{
@@ -58,144 +66,150 @@ export default function ProfilePage() {
             
             <LeftBar userId={userId} leftBarOption={"Profile"} />
             
-            <div className='col-6 mt-4'>
-                
-                <div className='flex justify-between items-center'>
+            {loading === false ? 
+
+                <div className='col-6 mt-4'>
                     
-                    <div className='flex flex-col w-full'>
+                    <div className='flex justify-between items-center'>
                         
-                        <img className="tweet__author-logo w-[150px] h-[150px] rounded-[50%] mr-[10px]" src="/images/avatar.png" alt="profile"/>
-                        
-                        <div className='row'>
+                        <div className='flex flex-col w-full'>
                             
-                            <div className='col-8 flex flex-col justify-center'>
-                                <div className='text-[20px] font-bold mt-3'>
-                                    {profile === null ? "This user Does not exist" : profile.name}
-                                </div>
-                                <div className='text-[15px] text-[#6b767c]'>
-                                    {profile !== null && "@"+profile.username}
-                                </div>
-                            </div>
-
-                            <div className='col-4 flex flex-col justify-center'>
-                                {userId === profileId ?
-                                    
-                                    <div className='text-right'>
-                                        <button onClick={()=>{setShowEditProfile(true);}} className='mb-2 hover:bg-[#d3d3d3] ps-3 pe-3 rounded-[20px] font-bold border-1 border-[grey] w-[130px] h-[35px]'>Edit Profile</button>
-                                        <EditProfileModal bio = {profile.bio} name={profile.name} username={profile.username} setShowEditProfile={setShowEditProfile} showEditProfile={showEditProfile}/>
-                                    </div>
-                                :
+                            <img className="tweet__author-logo w-[150px] h-[150px] rounded-[50%] mr-[10px]" src="/images/avatar.png" alt="profile"/>
+                            
+                            <div className='row'>
                                 
-                                    <div className='text-right'>
+                                <div className='col-8 flex flex-col justify-center'>
+                                    <div className='text-[20px] font-bold mt-3'>
+                                        {profile === null ? "This user Does not exist" : profile.name}
+                                    </div>
+                                    <div className='text-[15px] text-[#6b767c]'>
+                                        {profile !== null && "@"+profile.username}
+                                    </div>
+                                </div>
+
+                                <div className='col-4 flex flex-col justify-center'>
+                                    {userId === profileId ?
                                         
-                                            <button onClick = { async () => {
-                                                
-                                                let res;
-                                                
-                                                if(following)
-                                                    res = await unFollowUser(profileId);
-                                                else
-                                                    res = await followUser(profileId);
-                                
-                                                if(res)
-                                                    window.location.reload();
-                                                else
-                                                    alert("error");
-                                                
-                                            }} className={`mb-2 ${following === true ? "hover:bg-red-100 hover:text-red-600" : "hover:bg-black hover:text-white"} ps-3 pe-3 rounded-[20px] font-bold border-1 border-[grey] w-[120px] h-[35px]`}>{following ? "Unfollow" : "Follow"}</button>
-                                    </div>
-                                }
+                                        <div className='text-right'>
+                                            <button onClick={()=>{setShowEditProfile(true);}} className='mb-2 hover:bg-[#d3d3d3] ps-3 pe-3 rounded-[20px] font-bold border-1 border-[grey] w-[130px] h-[35px]'>Edit Profile</button>
+                                            <EditProfileModal bio = {profile.bio} name={profile.name} username={profile.username} setShowEditProfile={setShowEditProfile} showEditProfile={showEditProfile}/>
+                                        </div>
+                                    :
+                                    
+                                        <div className='text-right'>
+                                            
+                                                <button onClick = { async () => {
+                                                    
+                                                    let res;
+                                                    
+                                                    if(following)
+                                                        res = await unFollowUser(profileId);
+                                                    else
+                                                        res = await followUser(profileId);
+                                    
+                                                    if(res)
+                                                        window.location.reload();
+                                                    else
+                                                        alert("error");
+                                                    
+                                                }} className={`mb-2 ${following === true ? "hover:bg-red-100 hover:text-red-600" : "hover:bg-black hover:text-white"} ps-3 pe-3 rounded-[20px] font-bold border-1 border-[grey] w-[120px] h-[35px]`}>{following ? "Unfollow" : "Follow"}</button>
+                                        </div>
+                                    }
+                                </div>
+                            
                             </div>
-                        
-                        </div>
 
 
-                        <div className='text-[15px] mt-4 text-left w-[full]'>
-                            {profile !== null && profile.bio !==null && profile.bio}
+                            <div className='text-[15px] mt-4 text-left w-[full]'>
+                                {profile !== null && profile.bio !==null && profile.bio}
+                            </div>
+                            
+                            <div className='mt-3'>
+                                <b>{followingsLength?.length}</b> <span className='hover:underline hover:cursor-pointer text-[#6b767c] mr-2' onClick={()=>{navigate(`/followings/${profileId}`)}}>Following</span> 
+                                <b>{followersLength?.length}</b> <span className='hover:underline hover:cursor-pointer text-[#6b767c]' onClick={()=>{navigate(`/followers/${profileId}`)}}>Followers</span>
+                            </div>
+                            
+                            {userId === profileId &&  
+                                <button onClick={()=>{
+                                        localStorage.removeItem("Twitter JWT");
+                                        window.location.reload();
+                                    }} className='mt-3 hover:bg-[#d3d3d3] ps-3 pe-3 rounded-[20px] font-bold border-1 border-[grey] w-[100px] h-[40px]'>Logout</button>
+                            }
+                        
                         </div>
                         
-                        <div className='mt-3'>
-                            <b>{followingsLength?.length}</b> <span className='hover:underline hover:cursor-pointer text-[#6b767c] mr-2' onClick={()=>{navigate(`/followings/${profileId}`)}}>Following</span> 
-                            <b>{followersLength?.length}</b> <span className='hover:underline hover:cursor-pointer text-[#6b767c]' onClick={()=>{navigate(`/followers/${profileId}`)}}>Followers</span>
-                        </div>
-                        
-                        {userId === profileId &&  
-                            <button onClick={()=>{
-                                    localStorage.removeItem("Twitter JWT");
-                                    window.location.reload();
-                                }} className='mt-3 hover:bg-[#d3d3d3] ps-3 pe-3 rounded-[20px] font-bold border-1 border-[grey] w-[100px] h-[40px]'>Logout</button>
-                        }
-                    
                     </div>
                     
-                </div>
+                    {profile !== null && 
+                        
+                        <div>
+
+                            <div className='text-[25px] font-bold mt-4 '>All Tweets</div>
+                            {tweets.map((userTweet,index)=>{
+                                return <Tweet 
+                                    key={index} 
+                                    tweetId={userTweet.id}
+                                    tweetUserId = {userTweet.user.id}
+                                    createdAt = {userTweet.createdAt}
+                                    userId={userId}
+                                    name={userTweet.user.name || userTweet.user.email} 
+                                    handle={userTweet.user.username} 
+                                    content={userTweet.content}
+                                    likes={userTweet.likes}
+                                    retweets={userTweet.retweets}
+                                    comments={userTweet.comments.length}
+                                    imageSrc = {userTweet.image}
+                                />
+                            })}
+
+                            <div className='text-[25px] font-bold mt-4 '>Liked Tweets</div>
+                            {likedTweets.map((userTweet,index)=>{
+                                userTweet = userTweet.tweet;
+                                return <Tweet 
+                                    key={index} 
+                                    tweetId={userTweet.id}
+                                    tweetUserId = {userTweet.user.id}
+                                    createdAt = {userTweet.createdAt}
+                                    userId={userId}
+                                    name={userTweet.user.name || userTweet.user.email} 
+                                    handle={userTweet.user.username} 
+                                    content={userTweet.content}
+                                    likes={userTweet.likes}
+                                    retweets={userTweet.retweets}
+                                    comments={userTweet.comments.length}
+                                    imageSrc = {userTweet.image}
+                                />
+                            })}
+
+                            <div className='text-[25px] font-bold mt-4 mb-4'>Retweeted Tweets</div>
+                            {retweetedTweets.map((userTweet,index)=>{
+                                userTweet = userTweet.tweet;
+                                return <Tweet 
+                                    key={index} 
+                                    tweetId={userTweet.id}
+                                    tweetUserId = {userTweet.user.id}
+                                    createdAt = {userTweet.createdAt}
+                                    userId={userId}
+                                    name={userTweet.user.name || userTweet.user.email} 
+                                    handle={userTweet.user.username} 
+                                    content={userTweet.content}
+                                    likes={userTweet.likes}
+                                    retweets={userTweet.retweets}
+                                    comments={userTweet.comments.length}
+                                    imageSrc = {userTweet.image}
+                                />
+                            })}
+                        
+                        </div>
+
+                    }
                 
-                {profile !== null && 
-                    
-                    <div>
-
-                        <div className='text-[25px] font-bold mt-4 '>All Tweets</div>
-                        {tweets.map((userTweet,index)=>{
-                            return <Tweet 
-                                key={index} 
-                                tweetId={userTweet.id}
-                                tweetUserId = {userTweet.user.id}
-                                createdAt = {userTweet.createdAt}
-                                userId={userId}
-                                name={userTweet.user.name || userTweet.user.email} 
-                                handle={userTweet.user.username} 
-                                content={userTweet.content}
-                                likes={userTweet.likes}
-                                retweets={userTweet.retweets}
-                                comments={userTweet.comments.length}
-                                imageSrc = {userTweet.image}
-                            />
-                        })}
-
-                        <div className='text-[25px] font-bold mt-4 '>Liked Tweets</div>
-                        {likedTweets.map((userTweet,index)=>{
-                            userTweet = userTweet.tweet;
-                            return <Tweet 
-                                key={index} 
-                                tweetId={userTweet.id}
-                                tweetUserId = {userTweet.user.id}
-                                createdAt = {userTweet.createdAt}
-                                userId={userId}
-                                name={userTweet.user.name || userTweet.user.email} 
-                                handle={userTweet.user.username} 
-                                content={userTweet.content}
-                                likes={userTweet.likes}
-                                retweets={userTweet.retweets}
-                                comments={userTweet.comments.length}
-                                imageSrc = {userTweet.image}
-                            />
-                        })}
-
-                        <div className='text-[25px] font-bold mt-4 mb-4'>Retweeted Tweets</div>
-                        {retweetedTweets.map((userTweet,index)=>{
-                            userTweet = userTweet.tweet;
-                            return <Tweet 
-                                key={index} 
-                                tweetId={userTweet.id}
-                                tweetUserId = {userTweet.user.id}
-                                createdAt = {userTweet.createdAt}
-                                userId={userId}
-                                name={userTweet.user.name || userTweet.user.email} 
-                                handle={userTweet.user.username} 
-                                content={userTweet.content}
-                                likes={userTweet.likes}
-                                retweets={userTweet.retweets}
-                                comments={userTweet.comments.length}
-                                imageSrc = {userTweet.image}
-                            />
-                        })}
-                    
-                    </div>
-
-                }
-            
-            </div>
-            
+                </div>
+            :
+                <div className='col-6 flex justify-center items-center h-[100vh]'>
+                    <ReactLoading type="spin" color="#1D9BF0" height={100} width={50} />
+				</div>
+            }
             <RightBar/>
         
         </div>

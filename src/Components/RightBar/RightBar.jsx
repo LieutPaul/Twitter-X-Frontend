@@ -43,7 +43,7 @@ export default function RightBar() {
 	React.useEffect(() => {
 		async function getTweets() {
 			const tempTweets = await getAllTweets(setTweets);
-			if (tempTweets == null) {
+			if (tweets == null || tempTweets == null) {
 				navigate("/login");
 			}
 			setTrendingHashtags(findTrendingTweets(tempTweets));

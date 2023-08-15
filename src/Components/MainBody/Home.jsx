@@ -7,37 +7,37 @@ import { getAllTweets, getUserId } from '../../TweetAPIs';
 
 function Home() {
   
-  const [tweets,setTweets] = React.useState([]);
-  const navigate = useNavigate();
-  const [userId, setUserId] = React.useState(null);
+	const [tweets,setTweets] = React.useState([]);
+	const navigate = useNavigate();
+	const [userId, setUserId] = React.useState(null);
 
-  React.useEffect(() => {
-    async function getUserIdAndSetUp() {
-      const jwt = localStorage.getItem("Twitter JWT");
-      if (jwt) {
-        const userId = await getUserId(true, setUserId);
-        if (userId == null) {
-          navigate("/login");
-        } else {
-          const tweets = await getAllTweets(setTweets);
-          if (tweets == null) {
-            navigate("/login");
-          }
-        }
-      } else {
-        navigate("/login");
-      }
-    }
-    getUserIdAndSetUp();
-  }, [navigate]);
+	React.useEffect(() => {
+		async function getUserIdAndSetUp() {
+			const jwt = localStorage.getItem("Twitter JWT");
+			if (jwt) {
+				const userId = await getUserId(true, setUserId);
+				if (userId == null) {
+					navigate("/login");
+				} else {
+					const tweets = await getAllTweets(setTweets);
+					if (tweets == null) {
+						navigate("/login");
+					}
+				}
+			} else {
+				navigate("/login");
+			}
+		}
+		getUserIdAndSetUp();
+	}, [navigate]);
 
-  return (
-    <div className="layout row">
-      <LeftBar userId={userId} leftBarOption={"Home"}/>
-      <MainBody compose = {true} userId = {userId} allTweets={tweets}/>
-      <RightBar/>
-    </div>  
-  );
+	return (
+		<div className="layout row">
+			<LeftBar userId={userId} leftBarOption={"Home"}/>
+			<MainBody compose = {true} userId = {userId} allTweets={tweets}/>
+			<RightBar/>
+		</div>  
+	);
 
 }
 

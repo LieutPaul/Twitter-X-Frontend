@@ -61,7 +61,7 @@ export default function RightBar() {
 					
 					{
 						trendingHashtags.map((trendingHashtag, index) => {
-							return (<TrendsBlock key={index} name={trendingHashtag.hashtag} tweets={trendingHashtag.count}/>);
+							return (<TrendsBlock link={`/explore/trending?trend=${trendingHashtag.hashtag.substring(1)}`} key={index} name={trendingHashtag.hashtag} tweets={trendingHashtag.count}/>);
 						})
 					}
 

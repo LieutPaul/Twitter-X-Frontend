@@ -2,7 +2,7 @@ import React from 'react'
 import TrendsBlock from './TrendsBlock'
 import { useNavigate } from 'react-router-dom';
 import { getAllTweets } from '../../TweetAPIs';
-
+import ReactLoading from "react-loading";
 
 function isWithin24Hours(createdAt) {
 	const currentTime = new Date();
@@ -39,6 +39,7 @@ export default function RightBar() {
 	const [trendingHashtags,setTrendingHashtags] = React.useState([]);
 	const [tweets, setTweets] = React.useState([]);
 	const navigate = useNavigate();
+	const [loading, setLoading] = React.useState(false);
   
 	React.useEffect(() => {
 		async function getTweets() {
@@ -48,25 +49,33 @@ export default function RightBar() {
 			}
 			setTrendingHashtags(findTrendingTweets(tempTweets));
 		}
+		setLoading(true);
 		getTweets();
+		setLoading(false);
 	}, [navigate,tweets]);
 
 	return (
 		<div className='col-4 flex justify-center mt-4 right-bar-container'>
-			<div className='right-bar fixed w-[350px]'>
-				<div className='trends rounded-[15px] bg-[#f5f8fa]'>
-					<div className='font-black text-lg trends-heading pt-[20px] pb-[10px] ps-[15px] pe-[15px] mb-2'>
-					What's Happening?
-					</div>
-					
-					{
-						trendingHashtags.map((trendingHashtag, index) => {
-							return (<TrendsBlock link={`/explore/trending?trend=${trendingHashtag.hashtag.substring(1)}`} key={index} name={trendingHashtag.hashtag} tweets={trendingHashtag.count}/>);
-						})
-					}
+			{loading === false ?
+				<div className='right-bar fixed w-[350px]'>
+					<div className='trends rounded-[15px] bg-[#f5f8fa]'>
+						<div className='font-black text-lg trends-heading pt-[20px] pb-[10px] ps-[15px] pe-[15px] mb-2'>
+						What's Happening?
+						</div>
+						
+						{
+							trendingHashtags.map((trendingHashtag, index) => {
+								return (<TrendsBlock link={`/explore/trending?trend=${trendingHashtag.hashtag.substring(1)}`} key={index} name={trendingHashtag.hashtag} tweets={trendingHashtag.count}/>);
+							})
+						}
 
+					</div>
 				</div>
+			:
+			<div className='col-6 flex justify-center items-center h-[100vh]'>
+				<ReactLoading type="spin" color="#1D9BF0" height={100} width={50} />
 			</div>
+			}
 		</div>
 	)
 }

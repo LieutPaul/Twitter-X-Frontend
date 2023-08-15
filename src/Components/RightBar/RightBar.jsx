@@ -49,7 +49,7 @@ export default function RightBar() {
 			setTrendingHashtags(findTrendingTweets(tempTweets));
 		}
 		getTweets();
-	}, [navigate]);
+	}, [navigate,tweets]);
 
 	return (
 		<div className='col-4 flex justify-center mt-4 right-bar-container'>

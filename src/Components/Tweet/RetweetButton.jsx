@@ -4,6 +4,26 @@ import { FaRetweet } from 'react-icons/fa'
 import LikesRetweetsModal from './LikesRetweetsModal';
 
 export default function RetweetButton({userId, tweetId, postRetweeted, retweets}) {
+
+    const handleBeforeReload = () => {
+        localStorage.setItem('scrollPosition', window.scrollY);
+    };
+    
+    React.useEffect(() => {
+        const savedScrollPosition = localStorage.getItem('scrollPosition');
+        if (savedScrollPosition) {
+            window.scrollTo(0, parseInt(savedScrollPosition, 10));
+        }
+        localStorage.removeItem('scrollPosition');
+    }, []);
+    
+    React.useEffect(() => {
+        window.addEventListener('beforeunload', handleBeforeReload);
+        return () => {
+            window.removeEventListener('beforeunload', handleBeforeReload);
+        };
+    }, []);
+    
     const [showRetweetsModal, setShowRetweetsModal] = React.useState(false);
     
     return (

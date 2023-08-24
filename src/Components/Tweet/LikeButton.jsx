@@ -4,7 +4,28 @@ import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai'
 import LikesRetweetsModal from './LikesRetweetsModal';
 
 export default function LikeButton({userId, tweetId, postLiked,likes}) {
+
 	const [showLikesModal, setShowLikesModal] = React.useState(false);
+	
+	const handleBeforeReload = () => {
+        localStorage.setItem('scrollPosition', window.scrollY);
+    };
+    
+    React.useEffect(() => {
+        const savedScrollPosition = localStorage.getItem('scrollPosition');
+        if (savedScrollPosition) {
+            window.scrollTo(0, parseInt(savedScrollPosition, 10));
+        }
+        localStorage.removeItem('scrollPosition');
+    }, []);
+    
+    React.useEffect(() => {
+        window.addEventListener('beforeunload', handleBeforeReload);
+        return () => {
+            window.removeEventListener('beforeunload', handleBeforeReload);
+        };
+    }, []);
+	
 	return (
 		<div>
 			

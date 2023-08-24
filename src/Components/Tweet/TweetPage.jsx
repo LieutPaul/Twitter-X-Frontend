@@ -75,7 +75,7 @@ export default function TweetPage() {
                 <div className='col-6'>
                     
                     <div className='flex font-bold text-[25px] mt-3 mb-2'> 
-                        <BiArrowBack onClick={() => {navigate("/home")}} className='mt-2 mr-4 hover:cursor-pointer'/> 
+                        <BiArrowBack onClick={() => {navigate(-1)}} className='mt-2 mr-4 hover:cursor-pointer'/> 
                         Tweet
                     </div>
                     

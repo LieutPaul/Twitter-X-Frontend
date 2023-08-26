@@ -5,6 +5,7 @@ import {TfiNewWindow} from 'react-icons/tfi'
 import LikeButton from './LikeButton';
 import RetweetButton from './RetweetButton';
 import { useNavigate } from 'react-router-dom';
+import ReactLoading from "react-loading";
 
 
 export default function Tweet({tweetId,tweetUserId,createdAt,userId,name,handle,content,comments,retweets,likes,imageSrc}) {
@@ -19,7 +20,7 @@ export default function Tweet({tweetId,tweetUserId,createdAt,userId,name,handle,
             minute: '2-digit',
           });
     };
-    
+
     let formattedContent = content.replace(
         /#(\w+)/g,
         '<a href="/explore/trending?trend=$1" style="color:#1D9BF0; text-decoration: none;">#$1</a>'
@@ -32,6 +33,9 @@ export default function Tweet({tweetId,tweetUserId,createdAt,userId,name,handle,
 
     const postLiked = likes.some((like) => like.userId === userId);
     const postRetweeted = retweets.some((like) => like.userId === userId);
+    const [likeLoading,setLikeLoading] = React.useState(false);
+    const [retweetLoading,setRetweetLoading] = React.useState(false);
+
     const navigate = useNavigate();
     
     return (
@@ -73,10 +77,20 @@ export default function Tweet({tweetId,tweetUserId,createdAt,userId,name,handle,
                             {comments}
                         </span>
                     </div>
-
-                    <RetweetButton userId={userId} tweetId={tweetId} postRetweeted={postRetweeted} retweets={retweets}/>
-
-                    <LikeButton userId={userId} tweetId={tweetId} postLiked={postLiked} likes={likes} />
+                    {!retweetLoading? 
+                        <RetweetButton userId={userId} tweetId={tweetId} postRetweeted={postRetweeted} retweets={retweets} setRetweetLoading={setRetweetLoading} />
+                    :
+                        <div className='flex align-center h-full items-center justify-center'>
+                            <ReactLoading type="spin" color="#1D9BF0" height={20} width={20} />
+				        </div>
+                    }
+                    {!likeLoading?
+                        <LikeButton userId={userId} tweetId={tweetId} postLiked={postLiked} likes={likes} setLikeLoading={setLikeLoading} />
+                    :
+                        <div className='flex justify-center items-center h-[full]'>
+                            <ReactLoading type="spin" color="#1D9BF0" height={30} width={15} />
+				        </div>
+                    }
                     
                     <div className=''>
                         <span style={{ display: 'flex', alignItems: 'center' }}>

@@ -3,7 +3,7 @@ import { reTweet, unReTweet } from '../../TweetAPIs'
 import { FaRetweet } from 'react-icons/fa'
 import LikesRetweetsModal from './LikesRetweetsModal';
 
-export default function RetweetButton({userId, tweetId, postRetweeted, retweets}) {
+export default function RetweetButton({userId, tweetId, postRetweeted, retweets, setRetweetLoading}) {
 
     const handleBeforeReload = () => {
         localStorage.setItem('scrollPosition', window.scrollY);
@@ -36,9 +36,13 @@ export default function RetweetButton({userId, tweetId, postRetweeted, retweets}
                     
                     <FaRetweet 
                         onClick = { async ()=>{
+                            setRetweetLoading(true);
                             if(await unReTweet(userId,tweetId)){
                                 window.location.reload();
-                            }
+                            }else{
+								setRetweetLoading(false);
+								alert("Could not un-retweet the tweet.")
+							}
                         }} 
                         color={"green"}
                         className='hover:cursor-pointer' 
@@ -50,9 +54,13 @@ export default function RetweetButton({userId, tweetId, postRetweeted, retweets}
                     
                     <FaRetweet 
                         onClick = { async ()=>{
+                            setRetweetLoading(true);
                             if(await reTweet(userId,tweetId)){
                                 window.location.reload();
-                            }
+                            }else{
+								setRetweetLoading(false);
+								alert("Could not retweet the tweet.")
+							}
                         }} 
                         style={{ marginRight: '7.5px' }} 
                         className='hover:cursor-pointer'

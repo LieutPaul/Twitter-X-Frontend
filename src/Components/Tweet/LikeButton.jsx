@@ -3,7 +3,7 @@ import { LikeTweet, unLikeTweet } from '../../TweetAPIs'
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai'
 import LikesRetweetsModal from './LikesRetweetsModal';
 
-export default function LikeButton({userId, tweetId, postLiked,likes}) {
+export default function LikeButton({userId, tweetId, postLiked,likes, setLikeLoading}) {
 
 	const [showLikesModal, setShowLikesModal] = React.useState(false);
 	
@@ -35,8 +35,12 @@ export default function LikeButton({userId, tweetId, postLiked,likes}) {
 					
 					<AiFillHeart 
 						onClick = { async ()=>{
+							setLikeLoading(true);
 							if(await unLikeTweet(userId,tweetId)){
 								window.location.reload();
+							}else{
+								setLikeLoading(false);
+								alert("Could not un-like the tweet.")
 							}
 						}} 
 						color={"red"}
@@ -49,8 +53,12 @@ export default function LikeButton({userId, tweetId, postLiked,likes}) {
 					
 					<AiOutlineHeart 
 						onClick = { async ()=>{
+							setLikeLoading(true);
 							if(await LikeTweet(userId,tweetId)){
 								window.location.reload();
+							}else{
+								setLikeLoading(false);
+								alert("Could not like the tweet.")
 							}
 						}} 
 						style={{ marginRight: '7.5px' }} 
